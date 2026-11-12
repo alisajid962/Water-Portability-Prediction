@@ -1,2 +1,33 @@
 ﻿# Water-Portability-Prediction
-1. OverviewThe goal of this project is to predict whether a water sample is safe for human consumption (Potability = 1) or unsafe (Potability = 0) based on 9 chemical indicators. Due to the high noise-to-signal ratio inherent in water quality datasets, this project prioritizes scientific honesty, generalization, and prevention of false-safe predictions over artificially inflated accuracy scores.🛠️ 2. Dataset & PreprocessingThe model uses the water_potability.csv dataset (3,276 samples). To guarantee zero data leakage, preprocessing steps were strictly compartmentalized:Stratified Train-Test Split: Split 80% / 20% while maintaining the original class distribution (~61% unsafe, 39% safe).Missing Value Imputation: Missing values in ph, Sulfate, and Trihalomethanes were handled using KNNImputer ($k=7$) fitted strictly on the training set.Z-Score Normalization: StandardScaler was applied to standardize feature distributions.📊 3. Model Comparison & PerformanceMultiple models were evaluated using 5-Fold Stratified Cross-Validation:Model NameCV AccuracyTest AccuracyROC-AUCLogistic Regression60.9%60.9%0.544Decision Tree61.5%62.2%0.612XGBoost / Gradient Boosting64.2%64.5%0.649Voting Ensemble (RF + Extra Trees)66.7%65.4%0.674🛡️ 4. Handling Overfitting & RegularizationWhat is Overfitting? Occurs when models memorize training noise rather than learning general patterns (yielding 95%+ training accuracy but poor generalization).Why 80%–90%+ is Misleading: Unconstrained decision trees can easily overfit the training set, but test accuracy remains stagnant at ~65%.Our Solution: We enforced strict regularization (max_depth=12, min_samples_leaf=4) and used a Soft Voting Ensemble to balance bias and variance, ensuring reliable and safe real-world predictions.🧪 5. Custom Water Sample Prediction ExampleTesting the pipeline on a custom water sample:Parameters: pH: 7.2, Hardness: 204.89, Solids: 20,791, Chloramines: 7.30, Sulfate: 368.51, Conductivity: 564.30, Organic_Carbon: 10.37, Trihalomethanes: 86.99, Turbidity: 2.96Output:Probability of Unsafe: 56.98%Probability of Safe: 43.02%Final Classification: Non-Potable (Unsafe)
+# 💧 Water Quality Prediction & Machine Learning System
+
+An end-to-end machine learning project to predict water potability (`water_potability.csv`) with rigorous preprocessing, model comparison, and deployment readiness.
+
+## 🔗 Repository Link
+View the complete source code and project files in the [GitHub Repository](https://github.com/alisajid962/Water-Portability-Prediction.git)[cite: 3].
+
+---
+
+## 🚀 Key Features & Workflow
+- **Leakage-Free Preprocessing**: Handled missing values using `KNNImputer` and applied Z-Score normalization (`StandardScaler`) strictly on the training set.
+- **Model Evaluation & Comparison**: Evaluated Logistic Regression, Decision Trees, XGBoost, and a Soft Voting Ensemble using 5-fold cross-validation.
+- **Overfitting Prevention**: Regularized tree depth (`max_depth=12`) and leaf sizes (`min_samples_leaf=4`) to ensure reliable generalization (~65.4% test accuracy) without risking dangerous false-safe predictions.
+- **Interactive Application**: Integrated with a Streamlit interface for live water sample prediction and simulation.
+
+---
+
+## 📊 Model Performance Summary
+
+| Model Name | Test Accuracy | ROC-AUC |
+| :--- | :---: | :---: |
+| Logistic Regression | 60.9%[cite: 3] | 0.544[cite: 3] |
+| Decision Tree | 62.2%[cite: 3] | 0.612[cite: 3] |
+| XGBoost / Gradient Boosting | 64.5%[cite: 3] | 0.649[cite: 3] |
+| **Voting Ensemble (RF + Extra Trees)** | **65.4%**[cite: 3] | **0.674**[cite: 3] |
+
+---
+
+## ⚙️ Quick Start
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/alisajid962/Water-Portability-Prediction.git](https://github.com/alisajid962/Water-Portability-Prediction.git)
